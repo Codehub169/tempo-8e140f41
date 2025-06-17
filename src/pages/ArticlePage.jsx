@@ -15,7 +15,7 @@ import {
 } from '@chakra-ui/react';
 import Layout from '../components/Layout';
 import CodeHighlight from '../components/CodeHighlight';
-import { articles } from '../data/articlesContent'; // Assuming this is an array or object of articles
+import articles from '../data/articlesContent'; // Corrected: default import
 
 // Helper for Intersection Observer animations
 const useFadeInAnimation = () => {
@@ -68,7 +68,7 @@ const ArticlePage = () => {
   const textColor = useColorModeValue('text.secondary', 'text.secondary');
   const headingColor = useColorModeValue('text.primary', 'text.primary');
   const accentColor = useColorModeValue('accent.base', 'accent.base');
-  const codeBg = useColorModeValue('surface.base', 'surface.base');
+  // const codeBg = useColorModeValue('surface.base', 'surface.base'); // Not directly used in this component anymore
 
   if (loading) {
     return (
@@ -108,7 +108,9 @@ const ArticlePage = () => {
           <VStack as="ul" spacing={2} alignItems="flex-start" mb={6} pl={5}>
             {contentItem.items.map((item, index) => (
               <HStack as="li" key={index} alignItems="flex-start">
-                <Text color={accentColor} mr={2} as="span">→</Text>
+                <Text color={accentColor} mr={2} as="span">
+                  	&rarr;
+                </Text>
                 <Text color={textColor} dangerouslySetInnerHTML={{ __html: item }} />
               </HStack>
             ))}

@@ -93,7 +93,7 @@ const HistoryPage = () => {
                 year={event.year}
                 title={event.title}
                 description={event.description}
-                side={index % 2 === 0 ? 'left' : 'right'}
+                side={index % 2 === 0 ? 'left' : 'right'} // Alternating side based on index for desktop
                 delay={`${index * 0.1}s`}
               />
             ))}

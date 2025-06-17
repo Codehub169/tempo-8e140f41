@@ -85,7 +85,7 @@ const UsagePage = () => {
                 title={tutorial.title}
                 description={tutorial.description}
                 level={tutorial.level}
-                link={`/article/${tutorial.articleId || tutorial.id}`}
+                link={`/article/${tutorial.id}`}
                 delay={`${(index + 1) * 0.1}s`}
               />
             ))}

@@ -16,7 +16,8 @@ import Layout from '../components/Layout';
 import FeatureCard from '../components/FeatureCard';
 import ArticlePreviewCard from '../components/ArticlePreviewCard';
 import { homeContent } from '../data/homeContent';
-import { FiTerminal } from 'react-icons/fi'; // Example icon for terminal
+// Example icon, not used in the final terminal display logic
+// import { FiTerminal } from 'react-icons/fi'; 
 
 // Helper for Intersection Observer animations
 const useFadeInAnimation = () => {
@@ -94,8 +95,8 @@ const HomePage = () => {
             {hero.subtitle}
           </Text>
           <Box className="fade-in-up" style={{ transitionDelay: '0.2s' }}>
-            <Button as={RouterLink} to="#features" variant="primary" size="lg">
-              {hero.ctaText}
+            <Button as={RouterLink} to={hero.cta.link} variant="primary" size="lg">
+              {hero.cta.text}
             </Button>
           </Box>
           <Box
@@ -113,15 +114,13 @@ const HomePage = () => {
             className="fade-in-up"
             style={{ transitionDelay: '0.3s' }}
           >
-            <HStack>
-              <Text color={terminalPromptColor}>{hero.terminal.prompt}</Text>
-              <Text>{hero.terminal.command}</Text>
-            </HStack>
-            <Text>{hero.terminal.output}</Text>
-            <HStack>
-              <Text color={terminalPromptColor}>{hero.terminal.prompt}</Text>
-              <Box as="span" w="8px" h="1.2em" bg="text.primary" animation="blink 1s step-end infinite" />
-            </HStack>
+            {hero.terminalLines.map((line, index) => (
+              <HStack key={index}>
+                {line.prompt && <Text color={terminalPromptColor}>{line.prompt}</Text>}
+                {line.text && <Text>{line.text}</Text>}
+                {line.showCursor && <Box as="span" w="8px" h="1.2em" bg="text.primary" animation="blink 1s step-end infinite" />}
+              </HStack>
+            ))}
           </Box>
         </Container>
       </Box>
