@@ -13,9 +13,9 @@ export const homeContent = {
       link: '#features', // Link to features section on the same page
     },
     terminalLines: [
-      { prompt: 'user@linuxverse:~$", text: 'echo "Welcome, developer!"' },
+      { prompt: 'user@linuxverse:~$ ', text: `echo "Welcome, developer!"` },
       { text: 'Welcome, developer!' },
-      { prompt: 'user@linuxverse:~$", showCursor: true },
+      { prompt: 'user@linuxverse:~$ ', showCursor: true },
     ],
   },
   features: {
