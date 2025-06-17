@@ -1,6 +1,6 @@
 // Static content for the DifferencesPage (Distro Comparison)
 
-import UbuntuLogo from '../assets/logo-ubuntu.png'; // PNG imported as path
+import UbuntuLogo from '../assets/icon-distro.svg?react'; // PNG imported as path, changed to placeholder SVG
 import FedoraLogo from '../assets/logo-fedora.svg?react'; // SVG imported as React component
 import ArchLogo from '../assets/logo-arch.svg?react';   // SVG imported as React component
 
@@ -12,7 +12,7 @@ export const distrosContent = {
   distros: [
     {
       id: 'ubuntu',
-      logoSrc: UbuntuLogo,
+      logoSrc: UbuntuLogo, // Now an SVG component
       name: 'Ubuntu',
       description: 'A user-friendly, Debian-based distribution popular for both desktops and servers. It focuses on ease of use and a polished experience out of the box.',
       targetAudience: 'Beginners & Professionals',

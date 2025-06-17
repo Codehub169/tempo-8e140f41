@@ -11,9 +11,9 @@ import {
   ListIcon,
   Icon
 } from '@chakra-ui/react';
-import { ReactComponent as IconCheckmark } from '../assets/icon-checkmark.svg';
-import { ReactComponent as IconPackage } from '../assets/icon-package.svg';
-import { ReactComponent as IconStar } from '../assets/icon-star.svg';
+import IconCheckmark from '../assets/icon-checkmark.svg?react';
+import IconPackage from '../assets/icon-package.svg?react';
+import IconStar from '../assets/icon-star.svg?react';
 
 /**
  * DistroCard component
