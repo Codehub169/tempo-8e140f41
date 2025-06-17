@@ -1,8 +1,10 @@
 // Static content for the DifferencesPage (Distro Comparison)
 
 import UbuntuLogo from '../assets/icon-distro.svg?react'; // PNG imported as path, changed to placeholder SVG
-import FedoraLogo from '../assets/logo-fedora.svg?react'; // SVG imported as React component
-import ArchLogo from '../assets/logo-arch.svg?react';   // SVG imported as React component
+// Using placeholder for FedoraLogo as original ../assets/logo-fedora.svg?react was missing
+import FedoraLogo from '../assets/icon-distro.svg?react'; 
+// Using placeholder for ArchLogo as original ../assets/logo-arch.svg?react was missing
+import ArchLogo from '../assets/icon-distro.svg?react';   
 
 export const distrosContent = {
   pageInfo: {
@@ -22,7 +24,7 @@ export const distrosContent = {
     },
     {
       id: 'fedora',
-      logoSrc: FedoraLogo,
+      logoSrc: FedoraLogo, // Now using placeholder
       name: 'Fedora',
       description: "A community-driven project sponsored by Red Hat. It's known for being cutting-edge, featuring the latest software and technologies.",
       targetAudience: 'Developers & Enthusiasts',
@@ -32,7 +34,7 @@ export const distrosContent = {
     },
     {
       id: 'arch',
-      logoSrc: ArchLogo,
+      logoSrc: ArchLogo, // Now using placeholder
       name: 'Arch Linux',
       description: 'A lightweight, flexible distribution for competent users. It follows a "Do-It-Yourself" approach, providing a minimal base system for you to build upon.',
       targetAudience: 'Advanced Users & DIYers',
