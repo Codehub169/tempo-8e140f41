@@ -16,8 +16,8 @@ import {
   Icon,
 } from '@chakra-ui/react';
 import { NavLink as RouterNavLink } from 'react-router-dom';
-import { ReactComponent as LogoIcon } from '../assets/logo.svg';
-import { ReactComponent as MenuIcon } from '../assets/icon-menu-hamburger.svg';
+import LogoIcon from '../assets/logo.svg?react';
+import MenuIcon from '../assets/icon-menu-hamburger.svg?react';
 
 const NavItem = ({ to, children }) => (
   <ChakraLink
