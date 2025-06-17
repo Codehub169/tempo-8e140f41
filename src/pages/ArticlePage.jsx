@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useParams, Navigate } from 'react-router-dom';
+import { useParams } from 'react-router-dom'; // Removed Navigate
 import {
   Box,
   Container,
@@ -8,16 +8,20 @@ import {
   VStack,
   HStack,
   Tag,
-  useColorModeValue,
   Spinner,
   Alert,
   AlertIcon,
+  Breadcrumb,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  Icon
 } from '@chakra-ui/react';
+import { Link as RouterLink } from 'react-router-dom';
+import { ChevronRightIcon } from '@chakra-ui/icons'; // For breadcrumbs
 import Layout from '../components/Layout';
 import CodeHighlight from '../components/CodeHighlight';
-import articles from '../data/articlesContent'; // Corrected: default import
+import articles from '../data/articlesContent'; 
 
-// Helper for Intersection Observer animations
 const useFadeInAnimation = () => {
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -47,12 +51,9 @@ const ArticlePage = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // Simulate fetching article data
-    // In a real app, this might be an API call
     setLoading(true);
     let foundArticle = articles.find(art => art.id === articleId);
     
-    // If no articleId is provided in URL (e.g. /article), load a default or first article
     if (!articleId && articles.length > 0) {
         foundArticle = articles.find(art => art.id === 'mastering-the-command-line') || articles[0]; 
     }
@@ -60,64 +61,68 @@ const ArticlePage = () => {
     if (foundArticle) {
       setArticle(foundArticle);
     } else {
-      setArticle(null); // Explicitly set to null if not found
+      setArticle(null); 
     }
     setLoading(false);
   }, [articleId]);
 
-  const textColor = useColorModeValue('text.secondary', 'text.secondary');
-  const headingColor = useColorModeValue('text.primary', 'text.primary');
-  const accentColor = useColorModeValue('accent.base', 'accent.base');
-  // const codeBg = useColorModeValue('surface.base', 'surface.base'); // Not directly used in this component anymore
+  // Colors are derived from theme's brand object in main.jsx
 
   if (loading) {
     return (
       <Layout>
-        <Container maxW="800px" py={10} centerContent>
-          <Spinner size="xl" color="accent.base" />
-          <Text mt={4}>Loading article...</Text>
+        <Container maxW="800px" py={20} centerContent>
+          <Spinner size="xl" color="brand.accent" thickness="4px" speed="0.65s" />
+          <Text mt={6} fontSize="lg" color="brand.textSecondary">Loading article...</Text>
         </Container>
       </Layout>
     );
   }
 
   if (!article) {
-    // If article is explicitly null (not found after loading)
     return (
         <Layout>
-            <Container maxW="800px" py={10} centerContent>
-                <Alert status="error">
-                    <AlertIcon />
-                    Article not found. You might be redirected or please check the URL.
+            <Container maxW="800px" py={20} centerContent>
+                <Alert status="error" variant="subtle" flexDirection="column" alignItems="center" justifyContent="center" textAlign="center" height="200px" borderRadius="lg" bg="brand.surface">
+                    <AlertIcon boxSize="40px" mr={0} color="red.400" />
+                    <Text fontSize="xl" mt={4} mb={2} fontWeight="bold" color="brand.textPrimary">Article Not Found</Text>
+                    <Text color="brand.textSecondary">The requested article could not be located.</Text>
                 </Alert>
-                 {/* Optional: Redirect to a 404 page or homepage */}
-                 {/* <Navigate to="/404" replace /> */}
             </Container>
         </Layout>
     );
   }
 
-  const renderContent = (contentItem) => {
+  const inlineCodeStyles = {
+    fontSize: '0.85em',
+    bg: 'brand.surface',
+    color: 'brand.green',
+    px:'0.4em',
+    py:'0.15em',
+    borderRadius:'md'
+  };
+
+  const renderContent = (contentItem, index) => {
     switch (contentItem.type) {
       case 'paragraph':
-        return <Text mb={6} color={textColor} dangerouslySetInnerHTML={{ __html: contentItem.text }} />;
+        return <Text key={index} mb={6} color="brand.textSecondary" dangerouslySetInnerHTML={{ __html: contentItem.text }} sx={{ '& a': { color: 'brand.accent', fontWeight: '500', _hover: { textDecoration: 'underline'} }, '& strong': { color: 'brand.textPrimary', fontWeight: '600'}, '& code': inlineCodeStyles }} />;
       case 'heading':
-        return <Heading as={`h${contentItem.level}`} size={contentItem.level === 2 ? 'xl' : 'lg'} mt={10} mb={4} pb={2} borderBottom="1px solid" borderColor="border.base" color={headingColor}>{contentItem.text}</Heading>;
+        return <Heading key={index} as={`h${contentItem.level}`} fontSize={contentItem.level === 2 ? {base: 'xl', md:'2xl'} : {base: 'lg', md: 'xl'}} mt={10} mb={4} pb={2} borderBottom="1px solid" borderColor="brand.border" color="brand.textPrimary">{contentItem.text}</Heading>;
       case 'list':
         return (
-          <VStack as="ul" spacing={2} alignItems="flex-start" mb={6} pl={5}>
-            {contentItem.items.map((item, index) => (
-              <HStack as="li" key={index} alignItems="flex-start">
-                <Text color={accentColor} mr={2} as="span">
-                  	&rarr;
+          <VStack as="ul" key={index} spacing={3} alignItems="flex-start" mb={6} pl={5}>
+            {contentItem.items.map((item, idx) => (
+              <HStack as="li" key={idx} alignItems="flex-start" spacing={3}>
+                <Text color="brand.accent" mr={1} mt={1} as="span" fontSize="lg">
+                  &bull; {/* Using a bullet point, styled by Text color */}
                 </Text>
-                <Text color={textColor} dangerouslySetInnerHTML={{ __html: item }} />
+                <Text color="brand.textSecondary" dangerouslySetInnerHTML={{ __html: item }} sx={{ '& a': { color: 'brand.accent', fontWeight: '500', _hover: { textDecoration: 'underline'} }, '& strong': { color: 'brand.textPrimary', fontWeight: '600'}, '& code': inlineCodeStyles }} />
               </HStack>
             ))}
           </VStack>
         );
       case 'code':
-        return <CodeHighlight language={contentItem.language} code={contentItem.code} />;
+        return <CodeHighlight key={index} language={contentItem.language} code={contentItem.code} />;
       default:
         return null;
     }
@@ -125,28 +130,43 @@ const ArticlePage = () => {
 
   return (
     <Layout>
-      <Box as="main" pt={{ base: `calc(70px + 2rem)`, md: `calc(70px + 4rem)`}} pb={16}>
+      <Box as="article" pt={{ base: `calc(70px + 2rem)`, md: `calc(70px + 3rem)`}} pb={16}>
         <Container maxW="800px">
-          <Box as="header" pb={8} mb={8} borderBottom="1px solid" borderColor="border.base" className="fade-in-up">
+          <Breadcrumb spacing="8px" separator={<Icon as={ChevronRightIcon} color="brand.textSecondary" />} mb={6} fontSize="sm" className="fade-in-up">
+            <BreadcrumbItem>
+              <BreadcrumbLink as={RouterLink} to="/" color="brand.textSecondary" _hover={{color: "brand.accent"}}>Home</BreadcrumbLink>
+            </BreadcrumbItem>
+            <BreadcrumbItem>
+              {/* Link to a category page or UsagePage if applicable */}
+              <BreadcrumbLink as={RouterLink} to={article.category === 'Command Line' || article.category === 'Software' || article.category === 'Scripting' ? "/usage" : "/"} color="brand.textSecondary" _hover={{color: "brand.accent"}}>
+                {article.category || 'Articles'}
+              </BreadcrumbLink>
+            </BreadcrumbItem>
+            <BreadcrumbItem isCurrentPage>
+              <BreadcrumbLink href={`/article/${article.id}`} color="brand.textPrimary" fontWeight="500">{article.title}</BreadcrumbLink>
+            </BreadcrumbItem>
+          </Breadcrumb>
+
+          <Box as="header" pb={6} mb={8} borderBottom="1px solid" borderColor="brand.border" className="fade-in-up" style={{transitionDelay: '0.1s'}}>
             {article.category && (
-              <Tag size="lg" variant="subtle" colorScheme="green" fontFamily="mono" mb={4} color="green.base">
-                {article.category}
+              <Tag size="md" variant="subtle" bg="brand.surface" fontFamily="mono" mb={4} color="brand.green" fontWeight="500" px={3} py={1}>
+                {article.category.toUpperCase()}
               </Tag>
             )}
-            <Heading as="h1" fontSize={{ base: '3xl', md: '4xl' }} lineHeight="1.2" mb={4} color={headingColor}>
+            <Heading as="h1" fontSize={{ base: '2xl', md: '3xl', lg: '4xl' }} lineHeight="1.3" mb={5} color="brand.textPrimary">
               {article.title}
             </Heading>
-            <HStack spacing={4} fontSize="sm" color={textColor}>
+            <HStack spacing={4} fontSize={{base: "xs", md: "sm"}} color="brand.textSecondary">
               <Text>By {article.author}</Text>
+              <Text>&bull;</Text>
               <Text>Published on {article.date}</Text>
+              <Text>&bull;</Text>
               <Text>{article.readTime}</Text>
             </HStack>
           </Box>
 
           <Box className="article-content fade-in-up" style={{transitionDelay: '0.2s'}}>
-            {article.content.map((item, index) => (
-              <Box key={index}>{renderContent(item)}</Box>
-            ))}
+            {article.content.map((item, index) => renderContent(item, index))}
           </Box>
         </Container>
       </Box>

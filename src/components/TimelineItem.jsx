@@ -1,22 +1,12 @@
 import React from 'react';
 import { Box, Heading, Text, VStack } from '@chakra-ui/react';
 
-/**
- * TimelineItem component
- * Represents an event in a timeline, styled for alternating left/right layout.
- * @param {object} props - Component props
- * @param {string} props.year - The year of the event.
- * @param {string} props.title - The title of the event.
- * @param {string} props.description - A description of the event.
- * @param {'left' | 'right'} props.side - Determines the alignment on the timeline.
- * @param {string} [props.delay] - Animation delay (e.g., '0.1s').
- */
 const TimelineItem = ({ year, title, description, side, delay = '0s' }) => {
   const isLeft = side === 'left';
 
   return (
     <Box
-      className="fade-in-up" // For IntersectionObserver animation
+      className="fade-in-up" 
       style={{ transitionDelay: delay }}
       position="relative"
       width={{ base: '100%', md: '50%' }}
@@ -27,39 +17,40 @@ const TimelineItem = ({ year, title, description, side, delay = '0s' }) => {
       _after={{
         content: '""',
         position: 'absolute',
-        width: '20px',
-        height: '20px',
-        top: '25px',
-        bg: 'bg.base',
+        width: '18px', // Slightly smaller dot
+        height: '18px',
+        top: '28px', // Adjusted for alignment
+        bg: 'brand.bg', // Background of the dot to match page bg
         border: '3px solid',
-        borderColor: 'accent.base',
+        borderColor: 'brand.accent',
         borderRadius: '50%',
         zIndex: 1,
-        left: { base: '10px', md: isLeft ? 'auto' : '-10px' },
-        right: { base: 'auto', md: isLeft ? '-10px' : 'auto' },
+        left: { base: '10px', md: isLeft ? 'auto' : '-9px' }, // Adjusted for dot size
+        right: { base: 'auto', md: isLeft ? '-9px' : 'auto' }, // Adjusted for dot size
       }}
     >
       <VStack
-        p={6}
-        bg="surface.base"
+        p={{base: 5, md: 6}}
+        bg="brand.surface"
         borderWidth="1px"
-        borderColor="border.base"
+        borderColor="brand.border"
         borderRadius="lg" // 8px
         alignItems="flex-start"
         spacing={2}
-        transition="transform 0.3s ease, box-shadow 0.3s ease"
+        transition="all 0.25s ease-out"
         _hover={{
-          transform: 'translateY(-5px)',
-          boxShadow: '0 0 25px var(--chakra-colors-accent-glow)',
+          transform: 'translateY(-5px) scale(1.01)',
+          boxShadow: `0 8px 25px -5px var(--chakra-colors-brand-accentGlow)`,
+          borderColor: 'brand.accent'
         }}
       >
-        <Text fontFamily="mono" fontSize="xl" fontWeight="600" color="accent.base">
+        <Text fontFamily="mono" fontSize={{base: "lg", md: "xl"}} fontWeight="600" color="brand.accent">
           {year}
         </Text>
-        <Heading as="h3" size="sm" color="text.primary">
+        <Heading as="h3" size={{base: "xs", md: "sm"}} color="brand.textPrimary" fontWeight="600">
           {title}
         </Heading>
-        <Text color="text.secondary" fontSize="md">
+        <Text color="brand.textSecondary" fontSize={{base: "sm", md: "md"}}>
           {description}
         </Text>
       </VStack>

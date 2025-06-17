@@ -7,16 +7,17 @@
 /* 
   CSS Custom Properties defined here are for reference and can be used in Tailwind config or directly.
   Chakra UI theme in main.jsx also defines these for use within Chakra components.
+  Updated to match new theme.
 */
 :root {
-  --color-bg: #0a0a0a;
-  --color-surface: #141414;
-  --color-border: #262626;
-  --color-text-primary: #f5f5f5;
-  --color-text-secondary: #a3a3a3;
-  --color-accent: #00aaff;
-  --color-accent-glow: rgba(0, 170, 255, 0.3);
-  --color-green: #00ff9d;
+  --color-bg: #0F172A;
+  --color-surface: #1E293B;
+  --color-border: #334155;
+  --color-text-primary: #F1F5F9;
+  --color-text-secondary: #94A3B8;
+  --color-accent: #38BDF8;
+  --color-accent-glow: rgba(56, 189, 248, 0.4);
+  --color-green: #22C55E;
   
   --font-body: 'Inter', sans-serif;
   --font-heading: 'Montserrat', sans-serif;
@@ -30,35 +31,24 @@ html {
   scroll-behavior: smooth;
 }
 
-/* 
-  Base body styles are primarily handled by Chakra UI's global styles in main.jsx 
-  to ensure consistency with Chakra components. 
-  This section can be used for styles not covered by Chakra or Tailwind's preflight if needed.
-*/
 body {
-  /* Example: min-height ensures footer is at bottom on short pages */
-  /* min-height: 100vh; */
-  /* display: flex; /* If using flex for sticky footer, ensure #root is also flexed */
-  /* flex-direction: column; */
+  /* Base body styles handled by Chakra global styles */
 }
 
 #root {
-  /* flex-grow: 1; /* If using flex for sticky footer */
+  /* Base root styles handled by Chakra global styles */
 }
 
 
-/* Basic reset, though Tailwind's preflight and Chakra's normalization handle much of this */
 *, *::before, *::after {
   box-sizing: border-box;
-  /* margin: 0; /* Handled by Tailwind Preflight */
-  /* padding: 0; /* Handled by Tailwind Preflight */
 }
 
 /* Animation class from sample, can be used with JS or Framer Motion */
 .fade-in-up {
   opacity: 0;
-  transform: translateY(30px);
-  transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+  transform: translateY(20px); /* Slightly reduced for a subtler effect */
+  transition: opacity 0.5s ease-out, transform 0.5s ease-out;
 }
 
 .fade-in-up.visible {
@@ -66,15 +56,9 @@ body {
   transform: translateY(0);
 }
 
-/* Specific overrides or global utilities not fitting into Chakra/Tailwind components */
-
-/* Styling for PrismJS code highlighting if not done via component-specific imports */
-/* Ensure this path is correct or use a CDN link if preferred */
-/* @import 'prismjs/themes/prism-tomorrow.css'; */
-
-/* Example of a more specific global style: */
+/* Custom scrollbar styling using updated CSS variables */
 .custom-scrollbar::-webkit-scrollbar {
-  width: 8px;
+  width: 10px;
 }
 
 .custom-scrollbar::-webkit-scrollbar-track {
@@ -83,6 +67,14 @@ body {
 
 .custom-scrollbar::-webkit-scrollbar-thumb {
   background-color: var(--color-accent);
-  border-radius: 4px;
+  border-radius: 5px;
   border: 2px solid var(--color-surface);
 }
+
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background-color: #60A5FA; /* Lighter accent for hover */
+}
+
+/* PrismJS theme import (ensure it's installed if uncommented) */
+/* @import 'prismjs/themes/prism-okaidia.css'; */ 
+/* Okaidia is a popular dark theme that would fit well */

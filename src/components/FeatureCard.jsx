@@ -6,31 +6,30 @@ const FeatureCard = ({ icon, title, description, link, delay }) => {
   return (
     <LinkBox
       as="article"
-      p={{ base: 6, md: 8 }} // Responsive padding
-      bg="surface.base"
+      p={{ base: 6, md: 8 }}
+      bg="brand.surface"
       borderWidth="1px"
-      borderColor="border.base"
+      borderColor="brand.border"
       borderRadius="xl" // Large border radius (12px equivalent)
-      transition="all 0.3s ease"
+      transition="all 0.25s ease-out"
       _hover={{
-        transform: 'translateY(-5px)',
-        boxShadow: '0 0 25px var(--chakra-colors-accent-glow)', // Using CSS var for glow
-        borderColor: 'accent.base',
+        transform: 'translateY(-6px) scale(1.02)',
+        boxShadow: `0 10px 30px -10px var(--chakra-colors-brand-accentGlow)`,
+        borderColor: 'brand.accent',
       }}
-      // Animation properties for fade-in-up effect (can be triggered by IntersectionObserver in parent)
-      opacity={0} // Initially hidden for animation
-      transform="translateY(30px)" // Initial position for animation
-      className="fade-in-up" // Class for IntersectionObserver to target
-      style={{ transitionDelay: delay || '0s' }} // Staggered animation delay
+      opacity={0} 
+      transform="translateY(20px)" 
+      className="fade-in-up" 
+      style={{ transitionDelay: delay || '0s' }} 
     >
-      <VStack spacing={5} align="start">
-        {icon && <Icon as={icon} w="48px" h="48px" color="accent.base" mb={2}/>}
-        <Heading as="h3" size="md" color="text.primary">
+      <VStack spacing={5} align="start" h="100%">
+        {icon && <Icon as={icon} w={{base: "40px", md: "48px"}} h={{base: "40px", md: "48px"}} color="brand.accent" mb={2}/>}
+        <Heading as="h3" size="md" color="brand.textPrimary" fontWeight="600">
           <LinkOverlay as={RouterLink} to={link}>
             {title}
           </LinkOverlay>
         </Heading>
-        <Text color="text.secondary" fontSize="md">
+        <Text color="brand.textSecondary" fontSize="md" flexGrow={1}>
           {description}
         </Text>
       </VStack>
