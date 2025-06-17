@@ -11,7 +11,7 @@ import {
   HStack
 } from '@chakra-ui/react';
 import { Link as RouterLink } from 'react-router-dom';
-import { ReactComponent as ArrowRightIcon } from '../assets/icon-arrow-right.svg';
+import ArrowRightIcon from '../assets/icon-arrow-right.svg?react';
 
 /**
  * TutorialCard component
