@@ -1,1 +1,6 @@
-IThe `Files you need to  Generate` array contains new content for the following files: `startup.Sh` (the correct path appears to be `startup.sh`, as indicated in the provided context). The file path should be `startup.sh` not `startup.Sh`.
+#!/bin/sh
+# This script starts the Vite development server.
+
+# Run the 'dev' script defined in package.json
+# The 'dev' script will now use host and port configurations from vite.config.js
+npm run dev
