@@ -1,6 +1,6 @@
 import React from 'react';
 import { Box, Text, Container, VStack, Link, Icon, HStack } from '@chakra-ui/react';
-import { FaGithub } from 'react-icons/fa';
+import { FaGithub } from 'react-icons/fa6'; // Changed from 'react-icons/fa' to 'react-icons/fa6'
 
 const Footer = () => {
   return (
