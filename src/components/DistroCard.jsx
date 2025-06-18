@@ -15,53 +15,64 @@ import IconCheckmark from '../assets/icon-checkmark.svg?react';
 import IconPackage from '../assets/icon-package.svg?react';
 import IconStar from '../assets/icon-star.svg?react';
 
+/**
+ * DistroCard component
+ * Displays information about a Linux distribution.
+ * @param {object} props - Component props
+ * @param {string | React.ElementType} props.logoSrc - Source URL for the distro logo or an imported SVG component.
+ * @param {string} props.name - Name of the distribution.
+ * @param {string} props.description - Short description of the distro.
+ * @param {string} props.targetAudience - Target audience of the distro.
+ * @param {string} props.packageManager - Package manager used by the distro.
+ * @param {string} props.philosophy - Core philosophy of the distro.
+ * @param {string} [props.delay] - Animation delay (e.g., '0.1s').
+ */
 const DistroCard = ({ logoSrc, name, description, targetAudience, packageManager, philosophy, delay = '0s' }) => {
   const features = [
     { icon: IconCheckmark, text: 'Target', value: targetAudience },
-    { icon: IconPackage, text: 'Packages', value: packageManager }, // Renamed for clarity
+    { icon: IconPackage, text: 'Package Manager', value: packageManager },
     { icon: IconStar, text: 'Philosophy', value: philosophy },
   ];
 
   return (
     <Box
-      bg="brand.surface"
+      bg="surface.base"
       borderWidth="1px"
-      borderColor="brand.border"
+      borderColor="border.base"
       borderRadius="xl" // 12px
       overflow="hidden"
       display="flex"
       flexDirection="column"
-      h="100%" // Ensure cards in a grid have same height
-      className="fade-in-up" 
+      className="fade-in-up" // For IntersectionObserver animation
       style={{ transitionDelay: delay }}
-      transition="all 0.25s ease-out"
+      transition="transform 0.3s ease, box-shadow 0.3s ease"
       _hover={{
-        transform: 'translateY(-6px) scale(1.02)',
-        boxShadow: `0 10px 30px -10px var(--chakra-colors-brand-accentGlow)`,
-        borderColor: 'brand.accent'
+        transform: 'translateY(-5px)',
+        boxShadow: '0 0 25px var(--chakra-colors-accent-glow)',
+        borderColor: 'accent.base'
       }}
     >
-      <HStack p={6} borderBottomWidth="1px" borderColor="brand.border" spacing={4} bg="rgba(0,0,0,0.1)">
+      <HStack p={6} borderBottomWidth="1px" borderColor="border.base" spacing={4}>
         {typeof logoSrc === 'string' ? (
-          <Image src={logoSrc} alt={`${name} Logo`} boxSize={{base: "40px", md: "48px"}} objectFit="contain" />
+          <Image src={logoSrc} alt={`${name} Logo`} boxSize="48px" objectFit="contain" />
         ) : (
-          <Icon as={logoSrc} boxSize={{base: "40px", md: "48px"}} color="brand.textPrimary" /> 
+          <Icon as={logoSrc} boxSize="48px" color="currentColor" /> // Ensure SVG inherits color if needed or set explicitly
         )}
-        <Heading as="h3" size={{base: "md", md: "lg"}} color="brand.textPrimary" fontWeight="600">
+        <Heading as="h3" size="lg" color="text.primary">
           {name}
         </Heading>
       </HStack>
 
       <VStack p={6} alignItems="flex-start" spacing={4} flexGrow={1}>
-        <Text color="brand.textSecondary" fontSize={{base: "sm", md: "md"}} mb={2}>
+        <Text color="text.secondary" fontSize="md">
           {description}
         </Text>
         <List spacing={3} w="full">
           {features.map((feature) => (
             <ListItem key={feature.text} display="flex" alignItems="center">
-              <ListIcon as={feature.icon} color="brand.accent" w={{base: "16px", md: "18px"}} h={{base: "16px", md: "18px"}} />
-              <Text as="span" color="brand.textSecondary" fontSize={{base: "xs", md: "sm"}}>
-                <Text as="strong" color="brand.textPrimary" fontWeight="500">{feature.text}:</Text> {feature.value}
+              <ListIcon as={feature.icon} color="accent.base" w="18px" h="18px" />
+              <Text as="span" color="text.secondary" fontSize="sm">
+                <Text as="strong" color="text.primary" fontWeight="500">{feature.text}:</Text> {feature.value}
               </Text>
             </ListItem>
           ))}

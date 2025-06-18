@@ -6,30 +6,31 @@ const FeatureCard = ({ icon, title, description, link, delay }) => {
   return (
     <LinkBox
       as="article"
-      p={{ base: 6, md: 8 }}
-      bg="brand.surface"
+      p={{ base: 6, md: 8 }} // Responsive padding
+      bg="surface.base"
       borderWidth="1px"
-      borderColor="brand.border"
+      borderColor="border.base"
       borderRadius="xl" // Large border radius (12px equivalent)
-      transition="all 0.25s ease-out"
+      transition="all 0.3s ease"
       _hover={{
-        transform: 'translateY(-6px) scale(1.02)',
-        boxShadow: `0 10px 30px -10px var(--chakra-colors-brand-accentGlow)`,
-        borderColor: 'brand.accent',
+        transform: 'translateY(-5px)',
+        boxShadow: '0 0 25px var(--chakra-colors-accent-glow)', // Using CSS var for glow
+        borderColor: 'accent.base',
       }}
-      opacity={0} 
-      transform="translateY(20px)" 
-      className="fade-in-up" 
-      style={{ transitionDelay: delay || '0s' }} 
+      // Animation properties for fade-in-up effect (can be triggered by IntersectionObserver in parent)
+      opacity={0} // Initially hidden for animation
+      transform="translateY(30px)" // Initial position for animation
+      className="fade-in-up" // Class for IntersectionObserver to target
+      style={{ transitionDelay: delay || '0s' }} // Staggered animation delay
     >
-      <VStack spacing={5} align="start" h="100%">
-        {icon && <Icon as={icon} w={{base: "40px", md: "48px"}} h={{base: "40px", md: "48px"}} color="brand.accent" mb={2}/>}
-        <Heading as="h3" size="md" color="brand.textPrimary" fontWeight="600">
+      <VStack spacing={5} align="start">
+        {icon && <Icon as={icon} w="48px" h="48px" color="accent.base" mb={2}/>}
+        <Heading as="h3" size="md" color="text.primary">
           <LinkOverlay as={RouterLink} to={link}>
             {title}
           </LinkOverlay>
         </Heading>
-        <Text color="brand.textSecondary" fontSize="md" flexGrow={1}>
+        <Text color="text.secondary" fontSize="md">
           {description}
         </Text>
       </VStack>

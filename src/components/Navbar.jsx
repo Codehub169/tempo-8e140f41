@@ -23,36 +23,31 @@ const NavItem = ({ to, children }) => (
   <ChakraLink
     as={RouterNavLink}
     to={to}
-    fontWeight="500" // Slightly bolder
-    color="brand.textSecondary"
+    fontWeight="medium"
+    color="text.secondary"
     position="relative"
-    py={2}
-    px={3}
-    borderRadius="md"
-    transition="all 0.2s ease-in-out"
     _hover={{
-      color: 'brand.textPrimary',
-      bg: 'brand.surface',
-      textDecoration: 'none',
-      _after: { transform: 'scaleX(1)', transformOrigin: 'bottom left', width: '60%' },
+      color: 'text.primary',
+      _after: { transform: 'scaleX(1)', transformOrigin: 'left' },
     }}
     _activeLink={{
-      color: 'brand.accent',
-      fontWeight: '600',
-      _after: { transform: 'scaleX(1)', transformOrigin: 'bottom left', width: '60%', bgColor: 'brand.accent' },
+      color: 'text.primary',
+      _after: { transform: 'scaleX(1)', transformOrigin: 'left' },
     }}
     _after={{
       content: '""',
       position: 'absolute',
-      bottom: '0px',
-      left: '50%',
-      transform: 'translateX(-50%) scaleX(0)',
-      width: '0%',
+      bottom: '-4px',
+      left: 0,
+      width: '100%',
       height: '2px',
-      bgColor: 'brand.accent',
-      transformOrigin: 'bottom center',
-      transition: 'all 0.3s ease-in-out',
+      bgColor: 'accent.base',
+      transform: 'scaleX(0)',
+      transformOrigin: 'right',
+      transition: 'transform 0.3s ease',
     }}
+    px={2}
+    py={1}
   >
     {children}
   </ChakraLink>
@@ -75,16 +70,16 @@ const Navbar = () => {
       top="0"
       left="0"
       width="100%"
-      height="nav" // From theme
+      height="nav"
       zIndex="sticky"
-      bg="rgba(15, 23, 42, 0.85)" // brand.bg with transparency
-      backdropFilter="blur(12px)"
+      bg="rgba(10, 10, 10, 0.8)"
+      backdropFilter="blur(10px)"
       borderBottomWidth="1px"
-      borderColor="brand.border"
+      borderColor="border.base"
     >
       <Flex
         as="nav"
-        className="container" // Should use Chakra's Container component or props for consistency
+        className="container"
         h="100%"
         alignItems="center"
         justifyContent="space-between"
@@ -93,15 +88,15 @@ const Navbar = () => {
       >
         <ChakraLink as={RouterNavLink} to="/" _hover={{ textDecoration: 'none' }}>
           <Flex alignItems="center" gap="0.75rem">
-            <Icon as={LogoIcon} w={{base: "28px", md: "32px"}} h={{base: "28px", md: "32px"}} color="brand.accent" />
-            <Text fontFamily="mono" fontSize={{base: "1.1rem", md: "1.25rem"}} fontWeight="semibold" color="brand.textPrimary">
+            <Icon as={LogoIcon} w="32px" h="32px" color="accent.base" />
+            <Text fontFamily="mono" fontSize="1.25rem" fontWeight="semibold" color="text.primary">
               Linuxverse
             </Text>
           </Flex>
         </ChakraLink>
 
         {/* Desktop Navigation */}
-        <Flex display={{ base: 'none', md: 'flex' }} gap={{ base: "0.5rem", lg: "1rem"}} alignItems="center">
+        <Flex display={{ base: 'none', md: 'flex' }} gap="2rem">
           {navLinks.map((link) => (
             <NavItem key={link.name} to={link.path}>
               {link.name}
@@ -116,22 +111,21 @@ const Navbar = () => {
           display={{ base: 'flex', md: 'none' }}
           onClick={onOpen}
           variant="ghost"
-          color="brand.textPrimary"
-          _hover={{ bg: 'brand.surface' }}
-          _active={{ bg: 'brand.border' }}
+          color="text.primary"
+          _hover={{ bg: 'surface.base' }}
         />
       </Flex>
 
       {/* Mobile Navigation Drawer */}
-      <Drawer isOpen={isOpen} placement="right" onClose={onClose} size="xs">
+      <Drawer isOpen={isOpen} placement="right" onClose={onClose}>
         <DrawerOverlay />
-        <DrawerContent bg="brand.bg" color="brand.textPrimary">
-          <DrawerCloseButton _hover={{bg: 'brand.surface'}} _focus={{boxShadow: 'outline'}} />
-          <DrawerHeader borderBottomWidth="1px" borderColor="brand.border">
+        <DrawerContent bg="bg.base" color="text.primary">
+          <DrawerCloseButton _hover={{bg: 'surface.base'}} _focus={{boxShadow: 'outline'}} />
+          <DrawerHeader borderBottomWidth="1px" borderColor="border.base">
             Navigation
           </DrawerHeader>
           <DrawerBody>
-            <VStack as="nav" spacing={5} align="stretch" mt={8}>
+            <VStack as="nav" spacing={6} align="stretch" mt={6}>
               {navLinks.map((link) => (
                 <ChakraLink
                   key={link.name}
@@ -139,13 +133,10 @@ const Navbar = () => {
                   to={link.path}
                   fontSize="lg"
                   fontWeight="medium"
-                  color="brand.textSecondary"
+                  color="text.secondary"
                   onClick={onClose} // Close drawer on link click
-                  py={2}
-                  px={3}
-                  borderRadius="md"
-                  _hover={{ color: 'brand.textPrimary', bg: 'brand.surface', textDecoration: 'none' }}
-                  _activeLink={{ color: 'brand.accent', fontWeight: 'bold'}}
+                  _hover={{ color: 'text.primary' }}
+                  _activeLink={{ color: 'accent.base', fontWeight: 'bold'}}
                 >
                   {link.name}
                 </ChakraLink>
